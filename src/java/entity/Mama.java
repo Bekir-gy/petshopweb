@@ -43,6 +43,31 @@ public class Mama {
         this.mamaad = mamaad;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + this.mamaID;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Mama other = (Mama) obj;
+        if (this.mamaID != other.mamaID) {
+            return false;
+        }
+        return true;
+    }
+
    
     
     
