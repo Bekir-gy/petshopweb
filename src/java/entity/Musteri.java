@@ -59,6 +59,31 @@ public class Musteri {
     public void setMustericinsID(Cins mustericinsID) {
         this.mustericinsID = mustericinsID;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + this.musteriID;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Musteri other = (Musteri) obj;
+        if (this.musteriID != other.musteriID) {
+            return false;
+        }
+        return true;
+    }
     
     
     
