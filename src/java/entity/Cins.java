@@ -36,6 +36,30 @@ public class Cins {
     public void setCinsad(String cinsad) {
         this.cinsad = cinsad;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Cins other = (Cins) obj;
+        if (this.cinsID != other.cinsID) {
+            return false;
+        }
+        return true;
+    }
     
     
     
