@@ -8,6 +8,7 @@ package dao;
 import entity.Mama;
 import entity.Mtm;
 import entity.Musteri;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -46,8 +47,12 @@ public class MtmDAO extends DBConnect{
     
      public void create(Mtm c) {
         try {
-            Statement st = connect().createStatement();
-            st.executeUpdate("insert into many_to (m_id,mama_id) values (" + c.getMusteriID().getMusteriID() + "," + c.getMamaID().getMamaID() + ")");
+             PreparedStatement pst=this.connect().prepareStatement("insert into many_to (m_id,mama_id) values (?,?)");
+             pst.setInt(1, c.getMusteriID().getMusteriID());
+             pst.setInt(2, c.getMamaID().getMamaID());
+              pst.executeUpdate();
+            /*Statement st = connect().createStatement();
+            st.executeUpdate("insert into many_to (m_id,mama_id) values (" + c.getMusteriID().getMusteriID() + "," + c.getMamaID().getMamaID() + ")");*/
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -58,15 +63,17 @@ public class MtmDAO extends DBConnect{
      public List<Mtm> read() {
         List<Mtm> list = new ArrayList<>();
         try {
-            Statement st = connect().createStatement();
-            ResultSet rs = st.executeQuery("select * from many_to order by many_id desc");
+             PreparedStatement pst=this.connect().prepareStatement("select * from many_to order by many_id asc");
+             ResultSet rs =pst.executeQuery(); 
+           /* Statement st = connect().createStatement();
+            ResultSet rs = st.executeQuery("select * from many_to order by many_id desc");*/
             while (rs.next()) {
                Musteri l= this.getmDao().getById(rs.getInt("m_id"));
                Mama m= this.getMamaDao().getById(rs.getInt("mama_id"));
                 Mtm tmp = new Mtm (rs.getInt("many_id"),l,m);
                 list.add(tmp);
             }
-            st.close();
+            pst.close();
             rs.close();
 
         } catch (Exception e) {
