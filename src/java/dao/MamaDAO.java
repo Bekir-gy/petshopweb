@@ -8,6 +8,7 @@ package dao;
 import entity.Cins;
 import entity.Mama;
 import entity.Musteri;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -24,8 +25,11 @@ public class MamaDAO extends DBConnect{
     
     public void create(Mama c) {
         try {
-            Statement st = connect().createStatement();
-            st.executeUpdate("insert into mama (mama_adi) values ('" + c.getMamaad()+ "')");
+            PreparedStatement pst=this.connect().prepareStatement("insert into mama (mama_adi) values (?)");
+            pst.setString(1, c.getMamaad());
+            pst.executeUpdate();
+          /*  Statement st = connect().createStatement();
+            st.executeUpdate("insert into mama (mama_adi) values ('" + c.getMamaad()+ "')");*/
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -36,14 +40,16 @@ public class MamaDAO extends DBConnect{
     public List<Mama> read() {
         List<Mama> list = new ArrayList<>();
         try {
-            Statement st = connect().createStatement();
-            ResultSet rs = st.executeQuery("select * from mama order by mama_id asc");
+             PreparedStatement pst=this.connect().prepareStatement("select * from mama order by mama_id asc");
+              ResultSet rs =pst.executeQuery(); 
+            /*Statement st = connect().createStatement();
+            ResultSet rs = st.executeQuery("select * from mama order by mama_id asc");*/
             while (rs.next()) {
               
                 Mama tmp = new Mama(rs.getInt("mama_id"), rs.getString("mama_adi"));
                 list.add(tmp);
             }
-            st.close();
+            pst.close();
             rs.close();
 
         } catch (Exception e) {
