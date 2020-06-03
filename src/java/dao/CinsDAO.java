@@ -6,6 +6,7 @@
 package dao;
 
 import entity.Cins;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -34,8 +35,11 @@ public class CinsDAO extends DBConnect{
     
     public void create(Cins c) {
         try {
-            Statement st = connect().createStatement();
-            st.executeUpdate("insert into cins (cins_ad) values ('" + c.getCinsad()+ "')");
+            PreparedStatement pst=this.connect().prepareStatement("insert into cins (cins_ad) values (?)");
+            pst.setString(1,c.getCinsad());
+            pst.executeUpdate();
+            /*Statement st = connect().createStatement();
+            st.executeUpdate("insert into cins (cins_ad) values ('" + c.getCinsad()+ "')");*/
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -46,8 +50,9 @@ public class CinsDAO extends DBConnect{
     public List<Cins> read() {
         List<Cins> list = new ArrayList<>();
         try {
-            Statement st = connect().createStatement();
-            ResultSet rs = st.executeQuery("select * from cins order by cins_id asc");
+            PreparedStatement pst=this.connect().prepareStatement("select * from cins order by cins_id asc");
+            /*Statement st = connect().createStatement();*/
+            ResultSet rs =pst.executeQuery();  /*st.executeQuery("select * from cins order by cins_id asc");*/
             while (rs.next()) {
                 Cins tmp = new Cins(rs.getInt("cins_id"), rs.getString("cins_ad"));
                 list.add(tmp);
