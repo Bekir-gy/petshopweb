@@ -91,8 +91,14 @@ private CinsDAO cDao;
 
 public void update(Musteri c) {
         try {
-            Statement st = connect().createStatement();
-            st.executeUpdate("update musteri set m_adi='" + c.getMusteriad()+ "', m_soyadi='" + c.getMusterisoyad() + "', cins_id=" + c.getMustericinsID().getCinsID() + " where m_id=" + c.getMusteriID());
+             PreparedStatement pst=this.connect().prepareStatement("update musteri set m_adi=?, m_soyadi=?, cins_id=? where m_id=?");
+            pst.setString(1, c.getMusteriad());
+             pst.setString(2, c.getMusterisoyad());
+             pst.setInt(3, c.getMustericinsID().getCinsID());
+             pst.setInt(4, c.getMusteriID());
+             pst.executeUpdate();
+            /* Statement st = connect().createStatement();
+            st.executeUpdate("update musteri set m_adi='" + c.getMusteriad()+ "', m_soyadi='" + c.getMusterisoyad() + "', cins_id=" + c.getMustericinsID().getCinsID() + " where m_id=" + c.getMusteriID());*/
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -101,12 +107,19 @@ public void update(Musteri c) {
 
 public void delete(Musteri c) {
         try {
-            Statement st = connect().createStatement();
-            st.executeUpdate("delete from musteri where m_id=" + c.getMusteriID());
+            PreparedStatement pst=this.connect().prepareStatement("delete from musteri where m_id=?");
+            pst.setInt(1, c.getMusteriID());
+            pst.executeUpdate();
+            /*Statement st = connect().createStatement();
+            st.executeUpdate("delete from musteri where m_id=" + c.getMusteriID());*/
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public List<Musteri> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 
