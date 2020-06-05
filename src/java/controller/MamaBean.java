@@ -83,7 +83,7 @@ public class MamaBean implements Serializable{
     
     
     public List<Mama> getRead() {
-        return this.getDao().read();
+        return this.getDao().read(page,pageSize);
 
     }
 
