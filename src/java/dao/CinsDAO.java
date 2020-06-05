@@ -66,8 +66,12 @@ public class CinsDAO extends DBConnect{
 
     public void update(Cins c) {
         try {
-            Statement st = connect().createStatement();
-            st.executeUpdate("update cins set cins_ad='" + c.getCinsad()+  "' where cins_id=" + c.getCinsID());
+            PreparedStatement pst=this.connect().prepareStatement("update cins set cins_ad=? where cins_id=?");
+            pst.setString(1, c.getCinsad());
+            pst.setInt(2, c.getCinsID());
+            pst.executeUpdate();
+            /*Statement st = connect().createStatement();
+            st.executeUpdate("update cins set cins_ad='" + c.getCinsad()+  "' where cins_id=" + c.getCinsID());*/
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -76,8 +80,11 @@ public class CinsDAO extends DBConnect{
 
     public void delete(Cins c) {
         try {
-            Statement st = connect().createStatement();
-            st.executeUpdate("delete from cins where cins_id=" + c.getCinsID());
+             PreparedStatement pst=this.connect().prepareStatement("delete from cins where cins_id=?");
+             pst.setInt(1, c.getCinsID());
+             pst.executeUpdate();
+           /* Statement st = connect().createStatement();
+            st.executeUpdate("delete from cins where cins_id=" + c.getCinsID());*/
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
