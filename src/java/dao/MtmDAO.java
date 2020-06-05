@@ -84,8 +84,13 @@ public class MtmDAO extends DBConnect{
      
       public void update(Mtm c) {
         try {
-            Statement st = connect().createStatement();
-            st.executeUpdate("update many_to set m_id=" + c.getMusteriID().getMusteriID()+", mama_id=" + c.getMamaID().getMamaID()+" where many_id=" + c.getManyid() );
+            PreparedStatement pst=this.connect().prepareStatement("update many_to set m_id=?, mama_id=? where many_id=?");
+            pst.setInt(1, c.getMusteriID().getMusteriID());
+            pst.setInt(2, c.getMamaID().getMamaID());
+            pst.setInt(3, c.getManyid());
+            pst.executeUpdate();
+            /*Statement st = connect().createStatement();
+            st.executeUpdate("update many_to set m_id=" + c.getMusteriID().getMusteriID()+", mama_id=" + c.getMamaID().getMamaID()+" where many_id=" + c.getManyid() );*/
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -94,8 +99,11 @@ public class MtmDAO extends DBConnect{
       
        public void delete(Mtm c) {
         try {
-            Statement st = connect().createStatement();
-            st.executeUpdate("delete from many_to where many_id=" + c.getManyid());
+            PreparedStatement pst=this.connect().prepareStatement("delete from many_to where many_id=?");
+            pst.setInt(1, c.getManyid());
+            pst.executeUpdate();
+            /*Statement st = connect().createStatement();
+            st.executeUpdate("delete from many_to where many_id=" + c.getManyid());*/
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
