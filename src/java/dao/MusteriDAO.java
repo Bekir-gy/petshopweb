@@ -10,9 +10,12 @@ import entity.Cins;
 import entity.Musteri;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import util.DBConnect;
 
 /**
@@ -68,10 +71,11 @@ private CinsDAO cDao;
     }
 
 
- public List<Musteri> read() {
+ public List<Musteri> read(int page, int pagesize) {
         List<Musteri> list = new ArrayList<>();
+        int start=(page-1)*pagesize;
         try {
-             PreparedStatement pst=this.connect().prepareStatement("select * from musteri order by m_id desc");
+             PreparedStatement pst=this.connect().prepareStatement("select * from musteri order by m_id asc limit "+start+","+pagesize);
               ResultSet rs =pst.executeQuery(); 
            /* Statement st = connect().createStatement();
             ResultSet rs = st.executeQuery("select * from musteri order by m_id desc");*/
@@ -87,6 +91,26 @@ private CinsDAO cDao;
             System.out.println(e.getMessage());
         }
         return list;
+    }
+ 
+ public int count() {
+       int count=0;
+        try {
+             PreparedStatement pst=this.connect().prepareStatement("select count(m_id) as musteri_count from musteri");
+              ResultSet rs =pst.executeQuery(); 
+           /* Statement st = connect().createStatement();
+            ResultSet rs = st.executeQuery("select * from musteri order by m_id desc");*/
+             rs.next(); 
+             count=rs.getInt("musteri_count");
+               
+            
+            /*pst.close();
+            rs.close();*/
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return count;
     }
 
 public void update(Musteri c) {
@@ -107,25 +131,21 @@ public void update(Musteri c) {
 
 public void delete(Musteri c) {
         try {
-            PreparedStatement pst=this.connect().prepareStatement("delete from musteri where m_id=?");
+            /*PreparedStatement pst=this.connect().prepareStatement("delete from musteri where m_id=?");
             pst.setInt(1, c.getMusteriID());
-            pst.executeUpdate();
-            /*Statement st = connect().createStatement();
-            st.executeUpdate("delete from musteri where m_id=" + c.getMusteriID());*/
+            pst.executeUpdate();*/
+            Statement st = connect().createStatement();
+            st.executeUpdate("delete from musteri where m_id=" + c.getMusteriID());
+            
+            
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public List<Musteri> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
-
-
-
-
-
-
+    
+    
 }
