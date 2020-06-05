@@ -37,10 +37,11 @@ public class MamaDAO extends DBConnect{
 
     }
 
-    public List<Mama> read() {
+    public List<Mama> read(int page,int pagesize) {
         List<Mama> list = new ArrayList<>();
+        int start=(page-1)*pagesize;
         try {
-             PreparedStatement pst=this.connect().prepareStatement("select * from mama order by mama_id asc");
+             PreparedStatement pst=this.connect().prepareStatement("select * from mama order by mama_id asc limit "+start+","+pagesize);
               ResultSet rs =pst.executeQuery(); 
             /*Statement st = connect().createStatement();
             ResultSet rs = st.executeQuery("select * from mama order by mama_id asc");*/
@@ -56,6 +57,26 @@ public class MamaDAO extends DBConnect{
             System.out.println(e.getMessage());
         }
         return list;
+    }
+    
+     public int count() {
+        int count=0;
+        try {
+             PreparedStatement pst=this.connect().prepareStatement("select count(mama_id) as mama_count from mama");
+              ResultSet rs =pst.executeQuery(); 
+            /*Statement st = connect().createStatement();
+            ResultSet rs = st.executeQuery("select * from mama order by mama_id asc");*/
+             rs.next();
+             count=rs.getInt("mama_count");
+               
+            
+          /*  pst.close();
+            rs.close();*/
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return count;
     }
 
     public void update(Mama c) {
