@@ -60,8 +60,12 @@ public class MamaDAO extends DBConnect{
 
     public void update(Mama c) {
         try {
-            Statement st = connect().createStatement();
-            st.executeUpdate("update mama set mama_adi='"+ c.getMamaad() +"' where mama_id="+ c.getMamaID());
+            PreparedStatement pst=this.connect().prepareStatement("update mama set mama_adi=? where mama_id=?");
+            pst.setString(1, c.getMamaad());
+            pst.setInt(2, c.getMamaID());
+            pst.executeUpdate();
+           /* Statement st = connect().createStatement();
+            st.executeUpdate("update mama set mama_adi='"+ c.getMamaad() +"' where mama_id="+ c.getMamaID());*/
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -72,8 +76,11 @@ public class MamaDAO extends DBConnect{
 
     public void delete(Mama c) {
         try {
-            Statement st = connect().createStatement();
-            st.executeUpdate("delete from mama where mama_id=" + c.getMamaID());
+            PreparedStatement pst=this.connect().prepareStatement("delete from mama where mama_id=?");
+            pst.setInt(1, c.getMamaID());
+            pst.executeUpdate();
+            /*Statement st = connect().createStatement();
+            st.executeUpdate("delete from mama where mama_id=" + c.getMamaID());*/
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
