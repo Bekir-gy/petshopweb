@@ -60,10 +60,11 @@ public class MtmDAO extends DBConnect{
 
     }
      
-     public List<Mtm> read() {
+     public List<Mtm> read(int page,int pagesize) {
         List<Mtm> list = new ArrayList<>();
+        int start=(page-1)*pagesize;
         try {
-             PreparedStatement pst=this.connect().prepareStatement("select * from many_to order by many_id asc");
+             PreparedStatement pst=this.connect().prepareStatement("select * from many_to order by many_id asc limit "+start+","+pagesize);
              ResultSet rs =pst.executeQuery(); 
            /* Statement st = connect().createStatement();
             ResultSet rs = st.executeQuery("select * from many_to order by many_id desc");*/
@@ -80,6 +81,26 @@ public class MtmDAO extends DBConnect{
             System.out.println(e.getMessage());
         }
         return list;
+    }
+     
+     public int count() {
+        int count=0;
+        try {
+             PreparedStatement pst=this.connect().prepareStatement("select count(many_id) as many_to_count from many_to");
+             ResultSet rs =pst.executeQuery(); 
+           /* Statement st = connect().createStatement();
+            ResultSet rs = st.executeQuery("select * from many_to order by many_id desc");*/
+             rs.next();
+             count=rs.getInt("many_to_count");
+               
+            
+            /*pst.close();
+            rs.close();*/
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return count;
     }
      
       public void update(Mtm c) {
