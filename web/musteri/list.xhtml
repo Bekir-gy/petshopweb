@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/template/admin.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+
+            <h:commandButton styleClass="btn btn-info" action="/musteri/create" value="create new Musteri"/>
+            
+            <div class="btn-group">
+                <h:commandButton action="#{musteriBean.previous()}" value="geri" styleClass="btn btn-outline-dark"/>
+                <h:commandButton action="#{musteriBean.next()}" value="ileri" styleClass="btn btn-outline-dark"/>
+            </div> Sayfa #{musteriBean.page} of #{musteriBean.pageCount}
+            <h:dataTable styleClass="table table-hover table-dark table-striped mt-3" value="#{musteriBean.read}" var="c">
+
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                        #{c.musteriID}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">musteri ad</f:facet>
+                        #{c.musteriad}
+                </h:column>
+                 <h:column>
+                    <f:facet name="header">musteri soyad</f:facet>
+                        #{c.musterisoyad}
+                </h:column>
+                
+                 
+                
+                 <h:column>
+                    <f:facet name="header">cins ID</f:facet>
+                        #{c.mustericinsID.cinsad}
+                </h:column>
+                
+                
+                
+               
+
+                
+                <h:column>
+                    <f:facet name="header">ADMINISTOR</f:facet>
+                    <div class="btn-group" role="group">
+                    <h:commandButton styleClass="btn btn-warning" action="#{musteriBean.updateForm(c)}" value="update"/>
+                    <h:commandButton styleClass="btn btn-danger" action="#{musteriBean.delete(c)}" value="delete"/>
+                    </div>
+                </h:column>
+
+            </h:dataTable>
+
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
