@@ -36,7 +36,7 @@ public class MusteriBean implements Serializable{
     
    
     private int page=1;
-    private int pageSize=10;
+    private int pageSize=5;
     private int pageCount;
     
     public void next(){
