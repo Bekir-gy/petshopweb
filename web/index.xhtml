@@ -1,12 +1,70 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      >
     <h:head>
-        <title>Facelet Title</title>
+        <title>LOGIN</title>
+        <style>
+            *{
+                font-family: "Tahoma";
+            }
+            #login-panel {
+                width: 300px;
+                margin: 50px auto;
+                background-color: #fd7e14;
+            }
+            #login-panel table{
+                border: 5px solid darkgoldenrod;
+                padding: 50px;
+                background-color: #fd7e14;
+            }
+            :focus {
+                outline: none;
+            }
+            #login-panel input[type='text'],#login-panel input[type='password']{
+                border: 1px solid darkgoldenrod;
+                padding: 3px;
+            }
+            #login-panel input[type='submit']{
+                border: 1px solid darkgoldenrod;
+                width: 100%;
+                padding: 5px;
+                font-size: 14px;
+                color:  #000
+            }
+        </style>
     </h:head>
     <h:body>
-        proje öncesi deneme
+         petshop SAYFASI GİRİŞ PANELİ (KULLANICI ADI "admin" PAROLA "1234")
+         <div id="login-panel">
+              <h:form>
+                  <table>
+                      <tr>
+                          <td>
+                             USERNAME: 
+                          </td>
+                          <td>
+                              <h:inputText value="#{loginController.username}"/>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                              PASSWORD:
+                          </td>
+                          <td>
+                              <h:inputSecret value="#{loginController.password}"/>
+                          </td>
+                          
+                      </tr>
+                      <tr>
+                          <td colspan="2"><h:commandButton value="GİRİŞ" action="#{loginController.login()}"/> </td>
+                      </tr>
+                 
+                  </table>
+              </h:form>
+              
+          </div>
     </h:body>
 </html>
-
