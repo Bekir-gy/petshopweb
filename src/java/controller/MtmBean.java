@@ -23,7 +23,7 @@ public class MtmBean implements Serializable{
     private Mtm entity;
     
      private int page=1;
-    private int pageSize=10;
+    private int pageSize=5;
     private int pageCount;
 
      public void next(){
